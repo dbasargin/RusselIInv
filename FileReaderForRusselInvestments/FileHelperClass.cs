@@ -46,10 +46,10 @@ namespace FileReaderForRusselInvestments
         /// <returns>fully qualified path as a string</returns>
         public static string CreatePath()
         {
+            string path = @"c:\DennisBFolder\";
+            System.IO.Directory.CreateDirectory(path);
             string txtFileName = "DennisBProject.txt";
-            string path = @"c\";
-            var folder = Path.Combine(path, "DennisBFolder");
-            Directory.CreateDirectory(folder);
+
             return path + txtFileName;
         }
 
@@ -68,6 +68,7 @@ namespace FileReaderForRusselInvestments
                 {
                     strmWriter.WriteLine(line);
                 }
+                
             }
             catch(Exception ex)
             {
@@ -100,59 +101,40 @@ namespace FileReaderForRusselInvestments
         /// <param name="path">path to file</param>
         public static void DisplayLongestLineInFile(string path)
         {
-            //initialize stream
-            StreamReader strmReader = null;
-
+            
             //try accessing and reading file
             try
             {
-                using (strmReader = new StreamReader(path))
-                {
-                    List<String> textFileLines = new List<string>();
+                //Consume file into array
+                string[] textFileLines = File.ReadAllLines(path);
 
-                    while (!strmReader.EndOfStream)
+                //Sort file by desc
+                textFileLines = textFileLines.OrderByDescending(x => x.Length).ToArray();
+
+                //return without displaying lines if file is empty
+                if (textFileLines.Count() == 0)
                     {
-                        string newLine = strmReader.ReadLine();
-                        textFileLines.Add(newLine);
-                    }
-
-                    //Orders Lines by string length with LINQ(insures best practice)
-                    textFileLines = textFileLines.OrderByDescending(x => x.Length).ToList();
-
-                    //return without displaying lines if file is empty
-                    if (textFileLines.Count() == 0)
-                    {
-                        strmReader.Dispose();
                         return;
                     }
-                    // display lines with longest string length
-                    else
+                // display lines with longest string length
+                else
+                {
+                    for (int i = 0; i < textFileLines.Count(); i++)
                     {
-                        for (int i = 0; i < textFileLines.Count(); i++)
+                        if (i == 0 || textFileLines[i].Length == textFileLines[0].Length)
                         {
-                            if (i == 0 || textFileLines[i].Length == textFileLines[0].Length)
-                            {
-                                Console.WriteLine(textFileLines[i]);
-                            }
+                            Console.WriteLine(textFileLines[i]);
                         }
-
-                        AddEmptyLine();
                     }
+
+                    AddEmptyLine();
                 }
+                
             }
             //add error message if access to file fails
             catch
             {
-                Console.WriteLine("error accessing path: " + path);
-            }
-            //Dispose stream
-            finally
-            {
-                if (strmReader != null)
-                {
-                    strmReader.Dispose();
-                }
-
+                Console.WriteLine("error reading file:: path: " + path);
             }
         }
 

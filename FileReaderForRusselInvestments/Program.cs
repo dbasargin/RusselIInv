@@ -5,10 +5,12 @@ namespace FileReaderForRusselInvestments
 {
     class Program
     {
-                
+
         /// <summary>
-        ///  Write a program that reads lines from standard input and, upon end of file, writes the longest line to standard output. 
+        /// This Program creates a .txt file on Users machine which allows the user to add lines of text to the file from standard input.
+        ///  User can choose an option to reads lines from standard  text file  and, upon end of file, writes the longest line to standard output. 
         ///  If there are ties for the longest line, the program writes out all the lines that tie. If there is no input, the program should produce no output.
+        /// 
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
@@ -38,7 +40,6 @@ namespace FileReaderForRusselInvestments
                     }
                 }
             }
-
         }
 
 
