@@ -108,11 +108,8 @@ namespace FileReaderForRusselInvestments
                 
                 if(textFileLines.Count() > 0)
                 {
-                    //Get Length of longest Line
-                    int lengthOfLongestLines = textFileLines.OrderByDescending(x => x.Length).First().Length;
-
                     //get lines of longest Length
-                    textFileLines =  textFileLines.Where(x => x.Length == lengthOfLongestLines).ToArray();
+                    textFileLines = textFileLines.Where(x => x.Length == textFileLines.Max(m => m.Length)).ToArray();
 
                     // display lines with longest string length
                     foreach (var line in textFileLines)
