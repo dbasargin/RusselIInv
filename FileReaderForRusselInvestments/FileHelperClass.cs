@@ -101,32 +101,25 @@ namespace FileReaderForRusselInvestments
         /// <param name="path">path to file</param>
         public static void DisplayLongestLineInFile(string path)
         {
-            
-            //try accessing and reading file
             try
             {
-                //Consume file into array
+                // consume file into array
                 string[] textFileLines = File.ReadAllLines(path);
-
-                //Sort file by desc
-                textFileLines = textFileLines.OrderByDescending(x => x.Length).ToArray();
-
-                //return without displaying lines if file is empty
-                if (textFileLines.Count() == 0)
-                    {
-                        return;
-                    }
-                // display lines with longest string length
-                else
+                
+                if(textFileLines.Count() > 0)
                 {
-                    for (int i = 0; i < textFileLines.Count(); i++)
-                    {
-                        if (i == 0 || textFileLines[i].Length == textFileLines[0].Length)
-                        {
-                            Console.WriteLine(textFileLines[i]);
-                        }
-                    }
+                    //Get Length of longest Line
+                    int lengthOfLongestLines = textFileLines.OrderByDescending(x => x.Length).First().Length;
 
+                    //get lines of longest Length
+                    textFileLines =  textFileLines.Where(x => x.Length == lengthOfLongestLines).ToArray();
+
+                    // display lines with longest string length
+                    foreach (var line in textFileLines)
+                    {
+                        Console.WriteLine(line);
+                    }
+                    
                     AddEmptyLine();
                 }
                 
@@ -156,7 +149,6 @@ namespace FileReaderForRusselInvestments
                 string input = Console.ReadLine();
                 FileHelperClass.AppendFile(path, input);
                 AddEmptyLine();
-
 
                 //if user response is invalid: retry
                 bool invalidInput = true;
