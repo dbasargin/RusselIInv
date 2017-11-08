@@ -35,9 +35,25 @@ namespace FileReaderForRusselInvestments
             //display error 
             catch(Exception ex)
             {
-                Console.WriteLine("Error occurred creating file: Exception type of " + ex.GetType() );
+                ExceptionHandler(ex, "Error occured while Creating Text File");
             }
             return false;
+        }
+
+        /// <summary>
+        /// Exceptions are passed through this method with a message which formats, handles, and displays 
+        /// Errors in a consistent and easy to maintain location. 
+        /// </summary>
+        /// <param name="ex">exception being thrown</param>
+        /// <param name="errorMessage">discription of where this error is occuring</param>
+        public static void ExceptionHandler(Exception ex, string errorMessage)
+        {
+            Console.WriteLine("Error occurred : Exception type of " + ex.GetType());
+            Console.WriteLine(" :: " + errorMessage);
+
+            //I would consider adding an email feature right here to the development team
+            //with the exception and error message
+
         }
 
         /// <summary>
@@ -47,9 +63,18 @@ namespace FileReaderForRusselInvestments
         public static string CreatePath()
         {
             string path = @"c:\DennisBFolder\";
-            System.IO.Directory.CreateDirectory(path);
-            string txtFileName = "DennisBProject.txt";
 
+            try
+            {
+                System.IO.Directory.CreateDirectory(path);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler(ex, "Error occured while Creating Path");
+            }
+        
+
+            string txtFileName = "DennisBProject.txt";
             return path + txtFileName;
         }
 
@@ -72,7 +97,7 @@ namespace FileReaderForRusselInvestments
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.GetType() + "::Error adding line to: " + path);
+                
             }
             finally
             {
@@ -122,9 +147,9 @@ namespace FileReaderForRusselInvestments
                 
             }
             //add error message if access to file fails
-            catch
+            catch(Exception ex)
             {
-                Console.WriteLine("error reading file:: path: " + path);
+                ExceptionHandler(ex, "Error occurred while attempting to display longest line");
             }
         }
 

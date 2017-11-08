@@ -15,22 +15,23 @@ namespace FileReaderForRusselInvestments
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            
             DisplayProgramHeader();
             string path = FileHelperClass.CreatePath();
-            bool fileCreated =  FileHelperClass.CreateInitialTextFile(path);
+            bool fileCreated = FileHelperClass.CreateInitialTextFile(path);
 
             //initialize menuOption to get started
             string menuOption = "0";
 
             if (fileCreated)
-            { 
+            {
                 //Continue program until user selects option 3)Quit
                 while (menuOption != "3")
                 {
                     DisplayMenuOptions();
-                    menuOption =  SelectMenuOption();
+                    menuOption = SelectMenuOption();
 
-                    if(menuOption == "1")
+                    if (menuOption == "1")
                     {
                         FileHelperClass.CreateFileContent(path);
                     }
@@ -81,6 +82,7 @@ namespace FileReaderForRusselInvestments
             Console.WriteLine("Welcome! This program will read the longest lines of a .txt file.");
             Console.WriteLine("If there are ties for the longest line, the program writes out all the lines that tie.");
             Console.WriteLine("If there is no input, the program will produce no output.");
+
             AddEmptyLine();
         }
 
